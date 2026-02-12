@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from app.views import registration, authorization
+from app.views import registration, authorization, test
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +24,8 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
 
     path('api-auth/', include('rest_framework.urls')),
+
+    path('test/', test.as_view()),
 
 
     # path("registration/", registration.as_view()),

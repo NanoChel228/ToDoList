@@ -4,6 +4,7 @@ from .models import User
 from .serializers import UserSerializer
 from rest_framework.response import Response
 from django.shortcuts import redirect
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -53,3 +54,11 @@ class authorization(APIView):
                 
             }, status=401)
 
+
+class test(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+
+        return Response({
+            'message': 'hello World'
+        })

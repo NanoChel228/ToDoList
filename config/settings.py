@@ -38,9 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'app.apps.AppConfig',
     'rest_framework',
     'djoser',
+
+    'rest_framework_json_api',
 
 ]
 
@@ -130,9 +133,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework_simplejwt.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.BasicAuthentication',
-        'rest_framework_simplejwt.authentication.SessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ),
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework_json_api.pagination.PageNumberPagination',
@@ -145,15 +149,16 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    # 'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
 
-DJOSER = {
-    'SEND_ACTIVATION_EMAIL': True,
-    # 'SEND_CONFIRMATION_EMAIL': True,
-    'ACTIVATION_URL': 'auth/activate/{uid}/{token}/',
-    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
-    'PASSWORD_RESET_CONFIRM_URL': 'auth/reset/confirm/{uid}/{token}',
-    'TOKEN_MODEL': None,
-}
+# DJOSER = {
+#     'SEND_ACTIVATION_EMAIL': True,
+#     'SEND_CONFIRMATION_EMAIL': True,
+#     'ACTIVATION_URL': 'auth/activate/{uid}/{token}/',
+#     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+#     'PASSWORD_RESET_CONFIRM_URL': 'auth/reset/confirm/{uid}/{token}',
+#     'TOKEN_MODEL': None,
+# }
 
