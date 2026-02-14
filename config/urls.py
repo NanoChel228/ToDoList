@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from app.views import registration, authorization, test
+from app.views import test, createListAPIView, createAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
     path('test/', test.as_view()),
+    path('list-task/', createListAPIView.as_view()),
+    path('create-task/', createAPIView.as_view()),
 
 
     # path("registration/", registration.as_view()),

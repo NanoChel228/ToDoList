@@ -1,64 +1,41 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import User
-from .serializers import UserSerializer
+from .models import Task
+from .serializers import TaskSerializer
 from rest_framework.response import Response
 from django.shortcuts import redirect
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 
 
 # Create your views here.
 
 
 # Регистрация пользователя
-class registration(APIView):
+
+class createListAPIView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     
-    def post(self, request):
-
-        username = User.objects.filter(username=request.data.get("username"))
-
-        if username:
-            return Response({"message": "This user already exists"}, status=200)
-            # return redirect("authorization")
-        else:
-            serializer = UserSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
 
 
-        return Response({"message": "User created successfully"}, status=201)
-    
+class createAPIView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        users = User.objects.all()
-        return Response({"users": UserSerializer(users, many=True).data})
-    
-    
-
-# Авторизация пользователя
-class authorization(APIView):
-
-    def post(self, request):
-
-        data = User.objects.filter(username=request.data.get("username"), password=request.data.get("password"))
-
-        if data:
-            return Response({
-                "message": "Authorization successfull",
-
-            }, status=200)
-        
-        else:
-            return Response({
-                "message": "Invalid username or password"
-                
-            }, status=401)
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
 
 
 class test(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
 
+        users = request.user.id
+        username = request.user.username
+
         return Response({
-            'message': 'hello World'
+            'message': 'hello World',
+            'users': users,
+            'username': username,
         })
