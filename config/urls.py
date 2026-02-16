@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from app.views import test, createListAPIView, createAPIView
+from app.views import test, ListAPIView, createAPIView, CompletedAPIView, deleteAPIView, patchGetUserID
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,8 +26,13 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
     path('test/', test.as_view()),
-    path('list-task/', createListAPIView.as_view()),
+    path('list-task/', ListAPIView.as_view()),
     path('create-task/', createAPIView.as_view()),
+    path('complete-task/<int:pk>/', CompletedAPIView.as_view()),
+    path('delete-task/<int:pk>/', deleteAPIView.as_view()),
+
+    path('AdminUserID/<int:pk>/', patchGetUserID.as_view())
+
 
 
     # path("registration/", registration.as_view()),
